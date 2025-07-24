@@ -6,6 +6,13 @@ import java.util.List;
 @Entity
 public class Household {
 
+    @OneToMany(mappedBy = "household", cascade = CascadeType.ALL)
+    private java.util.List<User> members;
+
+    public java.util.List<User> getMembers() { return members; }
+    public void setMembers(java.util.List<User> members) { this.members = members; }
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
