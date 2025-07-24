@@ -1,12 +1,13 @@
-package com.roommatey.roommatey;
+package com.roommatey;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class HomeController {
+
     @GetMapping("/")
     public String home() {
-        return "index";
+        return "index"; // looks for index.html in templates/
     }
 }

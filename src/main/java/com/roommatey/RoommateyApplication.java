@@ -1,4 +1,4 @@
-package com.roommatey.roommatey;
+package com.roommatey;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
