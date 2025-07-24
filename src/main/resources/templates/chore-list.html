@@ -1,0 +1,15 @@
+<h2>Chores</h2>
+<table>
+    <tr>
+        <th>Name</th><th>Frequency</th><th>Actions</th>
+    </tr>
+    <tr th:each="c : ${chores}">
+        <td th:text="${c.name}"></td>
+        <td th:text="${c.frequency}"></td>
+        <td>
+            <a th:href="@{'/chores/edit/' + ${c.id}}">Edit</a> |
+            <a th:href="@{'/chores/delete/' + ${c.id}}">Delete</a>
+        </td>
+    </tr>
+</table>
+<a href="/chores/new">Add New Chore</a>

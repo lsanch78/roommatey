@@ -1,0 +1,10 @@
+<form th:action="@{/chores}" th:object="${chore}" method="post">
+    <label>Name: <input type="text" th:field="*{name}" /></label><br>
+    <label>Instructions: <textarea th:field="*{instructions}"></textarea></label><br>
+    <label>Frequency:
+        <select th:field="*{frequency}">
+            <option th:each="f : ${frequencies}" th:value="${f}" th:text="${f}"></option>
+        </select>
+    </label><br>
+    <button type="submit">Add Chore</button>
+</form>

@@ -2,6 +2,9 @@ package com.roommatey.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class User {
@@ -33,4 +36,16 @@ public class User {
 
     public Household getHousehold() { return household; }
     public void setHousehold(Household household) { this.household = household; }
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BillShare> shares = new ArrayList<>();
+
+    public List<BillShare> getShares() {
+        return shares;
+    }
+
+    public void setShares(List<BillShare> shares) {
+        this.shares = shares;
+    }
+
 }

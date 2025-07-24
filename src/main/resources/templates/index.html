@@ -5,20 +5,28 @@
 </head>
 <body>
 <h1>Welcome to RoomMatey</h1>
-<h2>Household:
-    <span th:text="${household.name}">[Household Name]</span>
-</h2>
 
+<h2 th:text="'Today is ' + ${day} + ', ' + ${date}">[Day, Date]</h2>
+
+<h3>Roommates and Their Upcoming Bills</h3>
+<ul th:if="${userBills}">
+    <li th:each="entry : ${userBills}">
+        <strong th:text="${entry.key.name}">[Roommate Name]</strong>
+        <ul>
+            <li th:each="bill : ${entry.value}">
+                <span th:text="${bill.name} + ' - Due ' + ${bill.dueDate} + ' ($' + ${bill.amount} + ')'"></span>
+            </li>
+            <li th:if="${entry.value.size() == 0}">No upcoming bills</li>
+        </ul>
+    </li>
+</ul>
+
+<hr>
+<h3>Quick Links</h3>
 <ul>
-    <li th:if="${household != null}">
-        <a th:href="@{/household/manage}">Manage Household</a>
-    </li>
-    <li th:if="${household == null}">
-        <a th:href="@{/household/setup}">Set Up Household</a>
-    </li>
     <li><a th:href="@{/users/manage}">Manage Users</a></li>
     <li><a th:href="@{/bills/manage}">Manage Bills</a></li>
-    <!-- add more links here as I build other features -->
+    <li><a th:href="@{/chores/all}">Manage Chores</a></li>
 </ul>
 </body>
 </html>
