@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Register User</title></head>
+<body>
+<h2>Register a New RoomMatey User</h2>
+<form th:action="@{/users/register}" method="post" th:object="${user}">
+    <label>Name: <input type="text" th:field="*{name}" /></label><br>
+    <label>Email: <input type="email" th:field="*{email}" /></label><br>
+    <label>Password: <input type="password" th:field="*{password}" /></label><br>
+    <label>Household:
+        <select name="household.id">  <!-- NOT th:field -->
+            <option th:each="h : ${households}" th:value="${h.id}" th:text="${h.name}"></option>
+        </select>
+    </label><br>
+    <button type="submit">Register</button>
+</form>
+</body>
+</html>
