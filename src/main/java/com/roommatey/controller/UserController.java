@@ -23,20 +23,26 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, @RequestParam("household.id") Long householdId) {
-        Household household = householdRepo.findById(householdId).orElse(null);
+    public String register(@ModelAttribute User user) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        if (household == null) {
+            return "redirect:/household/create"; // fallback
+        }
         user.setHousehold(household);
         userRepo.save(user);
         return "redirect:/users/registered";
     }
 
 
+
     @GetMapping("/register")
     public String showForm(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("user", new User());
-        model.addAttribute("households", householdRepo.findAll());
+        model.addAttribute("household", household);
         return "register-user";
     }
+
 
     @GetMapping("/registered")
     public String done() {

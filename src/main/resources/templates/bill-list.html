@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>All Bills</title></head>
+<body>
+<h2>All Bills</h2>
+<ul>
+    <li th:each="b : ${bills}">
+        <strong th:text="${b.name}"></strong> — $<span th:text="${b.amount}"></span> — <span th:text="${b.category}"></span>
+        <ul>
+            <li th:each="s : ${b.shares}">
+                <span th:text="${s.user.name}"></span> owes $<span th:text="${s.amountOwed}"></span> —
+                <span th:text="${s.paid} ? 'Paid' : 'Unpaid'"></span>
+            </li>
+        </ul>
+    </li>
+</ul>
+
+</body>
+</html>

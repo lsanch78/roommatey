@@ -1,4 +1,9 @@
 package com.roommatey.model;
 
-public class BillCategory {
+public enum BillCategory {
+    RENT,
+    UTILITIES,
+    ENTERTAINMENT,
+    CLEANING,
+    MISC
 }
