@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+<div th:if="${error}" style="color:red;">
+    <p th:text="${error}"></p>
+</div>
 <html xmlns:th="http://www.thymeleaf.org">
 <head><title>Create Bill</title></head>
 <body>

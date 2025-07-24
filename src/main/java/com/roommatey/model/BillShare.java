@@ -18,6 +18,16 @@ public class BillShare {
     private Double amountOwed;
     private boolean isPaid = false;
 
+    public BillShare(User user, Bill bill, double amountOwed) {
+        this.user = user;
+        this.bill = bill;
+        this.amountOwed = amountOwed;
+    }
+
+    public BillShare() {
+
+    }
+
     // Getters/setters
     public Long getId() { return id; }
 

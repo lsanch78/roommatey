@@ -5,13 +5,19 @@
 </head>
 <body>
 <h1>Welcome to RoomMatey</h1>
+<h2>Household:
+    <span th:text="${household.name}">[Household Name]</span>
+</h2>
 
 <ul>
-    <li><a th:href="@{/household/create}">Create a Household</a></li>
-    <li><a th:href="@{/users/register}">Register a User</a></li>
-    <li><a th:href="@{/users/all}">View All Users</a></li>
-    <li><a th:href="@{/bills/new}">Create a Bill</a></li>
-    <li><a th:href="@{/bills/all}">View All Bills</a></li>
+    <li th:if="${household != null}">
+        <a th:href="@{/household/manage}">Manage Household</a>
+    </li>
+    <li th:if="${household == null}">
+        <a th:href="@{/household/setup}">Set Up Household</a>
+    </li>
+    <li><a th:href="@{/users/manage}">Manage Users</a></li>
+    <li><a th:href="@{/bills/manage}">Manage Bills</a></li>
     <!-- add more links here as I build other features -->
 </ul>
 </body>

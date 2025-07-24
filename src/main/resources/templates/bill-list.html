@@ -10,6 +10,8 @@
             <li th:each="s : ${b.shares}">
                 <span th:text="${s.user.name}"></span> owes $<span th:text="${s.amountOwed}"></span> —
                 <span th:text="${s.paid} ? 'Paid' : 'Unpaid'"></span>
+                <a th:href="@{/bills/edit/{id}(id=${b.id})}">Edit</a> |
+                <a th:href="@{/bills/delete/{id}(id=${b.id})}" onclick="return confirm('Delete this bill?')">Delete</a>
             </li>
         </ul>
     </li>

@@ -26,6 +26,20 @@ public class BillController {
         this.userRepo = userRepo;
     }
 
+    @GetMapping("/manage")
+    public String manageBills(Model model) {
+        model.addAttribute("bills", billRepo.findAll());
+        return "bill-manage";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editBill(@PathVariable Long id, Model model) {
+        Bill bill = billRepo.findById(id).orElseThrow();
+        model.addAttribute("bill", bill);
+        model.addAttribute("users", userRepo.findAll());
+        return "edit-bill";
+    }
+
     @GetMapping("/new")
     public String newBillForm(Model model) {
         model.addAttribute("bill", new Bill());
@@ -38,47 +52,100 @@ public class BillController {
     @PostMapping
     public String createBill(@ModelAttribute Bill bill,
                              @RequestParam("userIds") List<Long> userIds,
-                             @RequestParam("splitType") String splitType) {
+                             @RequestParam("splitType") String splitType,
+                             Model model) {
 
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         bill.setHousehold(household);
-        billRepo.save(bill); // save first so bill has ID
 
-        List<User> users;
+        List<User> users = userRepo.findAll().stream()
+                .filter(u -> u.getHousehold().getId().equals(household.getId()))
+                .toList();
 
-        if (splitType.equals("even")) {
-            // Grab all users in the household
-            users = userRepo.findAll().stream()
-                    .filter(u -> u.getHousehold().getId().equals(household.getId()))
-                    .toList();
-
-            double splitAmount = bill.getAmount() / users.size();
-
-            for (User user : users) {
-                BillShare share = new BillShare();
-                share.setUser(user);
-                share.setBill(bill);
-                share.setAmountOwed(splitAmount);
-                bill.getShares().add(share);
-            }
-
-        } else if (splitType.equals("single")) {
-            // Use selected checkbox (must only pick one)
-            users = userRepo.findAllById(userIds);
-            User user = users.get(0);
-
-            BillShare share = new BillShare();
-            share.setUser(user);
-            share.setBill(bill);
-            share.setAmountOwed(bill.getAmount());
-            bill.getShares().add(share);
+        if (users.isEmpty()) {
+            model.addAttribute("error", "No users found in the household. Please add users before creating a bill.");
+            model.addAttribute("bill", bill);
+            model.addAttribute("households", householdRepo.findAll());
+            model.addAttribute("categories", BillCategory.values());
+            model.addAttribute("users", users);
+            return "create-bill";
         }
 
+        if ("even".equals(splitType)) {
+            double splitAmount = bill.getAmount() / users.size();
+            for (User user : users) {
+                BillShare share = new BillShare(user, bill, splitAmount);
+                bill.getShares().add(share);
+            }
+        } else if ("single".equals(splitType)) {
+            if (userIds == null || userIds.isEmpty()) {
+                model.addAttribute("error", "Please select a user for single split.");
+                model.addAttribute("bill", bill);
+                model.addAttribute("users", users);
+                model.addAttribute("categories", BillCategory.values());
+                return "create-bill";
+            }
+            User user = userRepo.findById(userIds.get(0)).orElse(null);
+            bill.getShares().add(new BillShare(user, bill, bill.getAmount()));
+        }
 
         billRepo.save(bill);
         return "redirect:/bills/all";
     }
 
+
+
+
+    @PostMapping("/update/{id}")
+    public String updateBill(@PathVariable Long id,
+                             @ModelAttribute Bill updatedBill,
+                             @RequestParam("splitType") String splitType,
+                             @RequestParam(value = "userIds", required = false) List<Long> userIds,
+                             Model model) {
+
+        Bill bill = billRepo.findById(id).orElseThrow();
+        bill.setName(updatedBill.getName());
+        bill.setAmount(updatedBill.getAmount());
+        bill.setDueDate(updatedBill.getDueDate());
+        bill.setCategory(updatedBill.getCategory());
+        bill.setRecurring(updatedBill.isRecurring());
+        bill.getShares().clear();
+
+        List<User> users = userRepo.findAll().stream()
+                .filter(u -> u.getHousehold().getId().equals(bill.getHousehold().getId()))
+                .toList();
+
+        if ("even".equals(splitType)) {
+            if (users.isEmpty()) {
+                model.addAttribute("error", "No users in household to split the bill evenly.");
+                model.addAttribute("bill", bill);
+                model.addAttribute("users", users);
+                return "edit-bill";
+            }
+            double splitAmount = bill.getAmount() / users.size();
+            for (User u : users) {
+                bill.getShares().add(new BillShare(u, bill, splitAmount));
+            }
+        } else if ("single".equals(splitType)) {
+            if (userIds == null || userIds.isEmpty()) {
+                model.addAttribute("error", "Please select a user for single split.");
+                model.addAttribute("bill", bill);
+                model.addAttribute("users", users);
+                return "edit-bill";
+            }
+            User u = userRepo.findById(userIds.get(0)).orElseThrow();
+            bill.getShares().add(new BillShare(u, bill, bill.getAmount()));
+        }
+
+        billRepo.save(bill);
+        return "redirect:/bills/all";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteBill(@PathVariable Long id) {
+        billRepo.deleteById(id);
+        return "redirect:/bills/all";
+    }
 
 
     @GetMapping("/all")
@@ -87,4 +154,6 @@ public class BillController {
         model.addAttribute("bills", bills);
         return "bill-list";
     }
+
+
 }

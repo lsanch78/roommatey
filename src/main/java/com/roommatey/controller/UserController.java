@@ -55,4 +55,32 @@ public class UserController {
         model.addAttribute("users", users);
         return "user-list";
     }
+
+    @GetMapping("/manage")
+    public String manageUsers(Model model) {
+        model.addAttribute("users", userRepo.findAll());
+        return "user-manage";
+    }
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable Long id, Model model) {
+        User user = userRepo.findById(id).orElseThrow();
+        model.addAttribute("user", user);
+        return "user-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
+        user.setId(id); // ensure update not insert
+        userRepo.save(user);
+        return "redirect:/users/manage";
+    }
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userRepo.deleteById(id);
+        return "redirect:/users/manage";
+    }
+
+
+
+
 }

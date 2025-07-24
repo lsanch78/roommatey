@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Household</title>
+</head>
+<body>
+<h2>Update Household Name</h2>
+<form th:action="@{/household/manage}" method="post" th:object="${household}">
+    <label>Household Name:
+        <input type="text" th:field="*{name}" />
+    </label><br>
+    <input type="hidden" th:field="*{id}" /> <!-- ensure ID is submitted -->
+    <button type="submit">Save</button>
+</form>
+</body>
+</html>

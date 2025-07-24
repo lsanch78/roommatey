@@ -39,6 +39,20 @@ public class HouseholdController {
         return "household-exists";
     }
 
+    @GetMapping("/manage")
+    public String manageHousehold(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        model.addAttribute("household", household);
+        return "household-manage";
+    }
+
+    @PostMapping("/manage")
+    public String updateHousehold(@ModelAttribute Household household) {
+        householdRepo.save(household); // Updates the name of the existing household
+        return "redirect:/";
+    }
+
+
     @GetMapping("/created")
     public String createdMessage() {
         return "household-created";
