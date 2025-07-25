@@ -48,4 +48,11 @@ public class User {
         this.shares = shares;
     }
 
+    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
+    private List<Chore> assignedChores = new ArrayList<>();
+
+    public List<Chore> getAssignedChores() {
+        return assignedChores;
+    }
+
 }

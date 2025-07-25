@@ -6,17 +6,21 @@
 <body>
 <h1>Welcome to RoomMatey</h1>
 
-<h2 th:text="'Today is ' + ${day} + ', ' + ${date}">[Day, Date]</h2>
+<h2 th:text="${todayFormatted}"></h2>
 
-<h3>Roommates and Their Upcoming Bills</h3>
+<h3>Upcoming Events</h3>
 <ul th:if="${userBills}">
     <li th:each="entry : ${userBills}">
         <strong th:text="${entry.key.name}">[Roommate Name]</strong>
         <ul>
             <li th:each="bill : ${entry.value}">
-                <span th:text="${bill.name} + ' - Due ' + ${bill.dueDate} + ' ($' + ${bill.amount} + ')'"></span>
+                <span th:text="'Bill: ' + ${bill.name} + ' - Due ' + ${bill.dueDate} + ' ($' + ${bill.amount} + ')'"></span>
             </li>
             <li th:if="${entry.value.size() == 0}">No upcoming bills</li>
+            <li th:if="${entry.key.assignedChores?.size() > 0}" th:each="chore : ${entry.key.assignedChores}">
+                <span th:text="'Chore: ' + ${chore.name} + ' (' + ${chore.frequency} + ')'"></span>
+            </li>
+            <li th:if="${entry.key.assignedChores == null or entry.key.assignedChores.size() == 0}">No chores</li>
         </ul>
     </li>
 </ul>

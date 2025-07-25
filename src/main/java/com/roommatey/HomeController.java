@@ -1,14 +1,14 @@
-package com.roommatey.controller;
+package com.roommatey;
 
-import com.roommatey.model.Bill;
-import com.roommatey.model.BillShare;
-import com.roommatey.model.Household;
-import com.roommatey.model.User;
+import com.roommatey.model.*;
 import com.roommatey.repository.HouseholdRepository;
 import com.roommatey.repository.UserRepository;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import java.time.format.DateTimeFormatter;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -25,16 +25,20 @@ public class HomeController {
         this.userRepo = userRepo;
     }
 
+    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
+    private List<Chore> assignedChores;
+
     @GetMapping("/")
     public String home(Model model) {
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("household", household);
 
         LocalDate today = LocalDate.now();
-        DayOfWeek day = today.getDayOfWeek();
 
-        model.addAttribute("day", day);
-        model.addAttribute("date", today);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d");
+        String formatted = today.format(formatter) + getDaySuffix(today.getDayOfMonth());
+        model.addAttribute("todayFormatted", formatted);
+
 
         Map<User, List<Bill>> userBills = new HashMap<>();
         for (User user : userRepo.findAll()) {
@@ -51,4 +55,14 @@ public class HomeController {
 
         return "index";
     }
+    private String getDaySuffix(int day) {
+        if (day >= 11 && day <= 13) return "th";
+        return switch (day % 10) {
+            case 1 -> "st";
+            case 2 -> "nd";
+            case 3 -> "rd";
+            default -> "th";
+        };
+    }
+
 }

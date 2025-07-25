@@ -1,0 +1,19 @@
+<form th:action="@{/chores/create}" th:object="${chore}" method="post">
+    <label>Name: <input type="text" th:field="*{name}" /></label><br>
+    <label>Instructions: <textarea th:field="*{instructions}"></textarea></label><br>
+    <label>Frequency:
+        <select th:field="*{frequency}">
+            <option th:each="f : ${frequencies}" th:value="${f}" th:text="${f}"></option>
+        </select>
+    </label><br>
+    <label for="user">Assign to:</label>
+    <select name="userId" id="user" required>
+        <option value="">-- Choose a roommate --</option>
+        <th:block th:each="user : ${users}">
+            <option th:value="${user.id}" th:text="${user.name}"
+                    th:selected="${chore.assignedTo?.id == user.id}"></option>
+        </th:block>
+    </select>
+
+    <button type="submit">Add Chore</button>
+</form>
