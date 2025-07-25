@@ -29,7 +29,6 @@
 
 - Java 17+
 - Maven 3.8+
-- MySQL (optional, for production)
 
 ### Run Locally
 
