@@ -3,7 +3,6 @@ package com.roommatey.controller;
 import com.roommatey.model.Chore;
 import com.roommatey.model.ChoreType;
 import com.roommatey.model.Frequency;
-import com.roommatey.model.Household;
 import com.roommatey.repository.ChoreRepository;
 import com.roommatey.repository.HouseholdRepository;
 import com.roommatey.repository.UserRepository;
@@ -39,7 +38,7 @@ public class ChoreController {
         model.addAttribute("frequencies", Frequency.values());
         model.addAttribute("users", userRepo.findAll());
         model.addAttribute("types", ChoreType.values());
-        return "create-chore";
+        return "chore-create";
     }
 
     @PostMapping("/create")
@@ -65,7 +64,7 @@ public class ChoreController {
         model.addAttribute("frequencies", Frequency.values());
         model.addAttribute("users", userRepo.findAll());
         model.addAttribute("types", ChoreType.values());
-        return "edit-chore.html";
+        return "chore-edit.html";
     }
 
 

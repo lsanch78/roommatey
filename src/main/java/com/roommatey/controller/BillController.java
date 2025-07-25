@@ -7,7 +7,6 @@ import com.roommatey.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import com.roommatey.repository.UserRepository;
 
 
 import java.util.List;
@@ -46,7 +45,7 @@ public class BillController {
         model.addAttribute("households", householdRepo.findAll());
         model.addAttribute("categories", BillCategory.values());
         model.addAttribute("users", userRepo.findAll());
-        return "create-bill";
+        return "bill-create";
     }
 
     @PostMapping
@@ -68,7 +67,7 @@ public class BillController {
             model.addAttribute("households", householdRepo.findAll());
             model.addAttribute("categories", BillCategory.values());
             model.addAttribute("users", users);
-            return "create-bill";
+            return "bill-create";
         }
 
         if ("even".equals(splitType)) {
@@ -83,7 +82,7 @@ public class BillController {
                 model.addAttribute("bill", bill);
                 model.addAttribute("users", users);
                 model.addAttribute("categories", BillCategory.values());
-                return "create-bill";
+                return "bill-create";
             }
             User user = userRepo.findById(userIds.get(0)).orElse(null);
             bill.getShares().add(new BillShare(user, bill, bill.getAmount()));

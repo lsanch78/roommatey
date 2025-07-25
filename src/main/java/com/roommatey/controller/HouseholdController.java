@@ -22,7 +22,7 @@ public class HouseholdController {
             return "redirect:/household/exists";
         }
         model.addAttribute("household", new Household());
-        return "create-household";
+        return "household-create";
     }
 
     @PostMapping("/create")
