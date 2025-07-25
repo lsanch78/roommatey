@@ -13,6 +13,8 @@ public class Bill {
 
     private String name;
 
+    private String description;
+
     @Enumerated(EnumType.STRING)
     private BillCategory category;
 
@@ -53,4 +55,13 @@ public class Bill {
 
     public Household getHousehold() { return household; }
     public void setHousehold(Household household) { this.household = household; }
+
+
+    public String getDescription() {
+        return description;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
 }

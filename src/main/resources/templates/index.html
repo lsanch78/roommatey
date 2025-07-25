@@ -10,21 +10,35 @@
 <h4 th:text="${todayFormatted}" class="text-muted mb-3"></h4>
 
 <h3 class="mt-4">📅 Upcoming Events</h3>
+
 <div th:each="entry : ${userBills}" class="mb-4 border rounded p-3 shadow-sm">
-    <h5 th:text="${entry.key.name}" class="text-primary"></h5>
+    <h5 th:text="${entry.key.name}" class="text-primary mb-3"></h5>
+
+    <!-- Bills -->
     <ul class="list-group list-group-flush mb-2">
-        <li th:each="bill : ${entry.value}" class="list-group-item">
-            <span th:text="${bill.name} + ' – Due ' + ${bill.dueDate} + ' ($' + ${bill.amount} + ')'"></span>
+        <li th:each="bill : ${entry.value}" th:if="${bill != null}" class="list-group-item d-flex justify-content-between align-items-center">
+            <span>
+                <strong th:text="${bill.bill.name}"></strong> –
+                <span th:text="'Due ' + ${#temporals.format(bill.bill.dueDate, 'MMMM dd, yyyy')}"></span>
+            </span>
+            <span class="badge bg-danger rounded-pill" th:text="'$' + ${#numbers.formatDecimal(bill.amountOwed, 1, 2)}"></span>
         </li>
         <li th:if="${entry.value.size() == 0}" class="list-group-item text-muted">No upcoming bills</li>
     </ul>
+
+    <!-- Chores -->
     <ul class="list-group list-group-flush">
         <li th:each="chore : ${userChores[entry.key]}" class="list-group-item">
-            <span th:text="${chore.name} + ' (' + chore.frequency + ')' + ' – ' + chore.instructions"></span>
+            <span>
+                <strong th:text="${chore.name}"></strong>
+                <span class="text-muted" th:text="'(' + ${chore.frequency} + ')'"></span> –
+                <span th:text="${chore.instructions}"></span>
+            </span>
         </li>
         <li th:if="${userChores[entry.key].size() == 0}" class="list-group-item text-muted">No chores assigned</li>
     </ul>
 </div>
+
 
 <hr class="my-4">
 

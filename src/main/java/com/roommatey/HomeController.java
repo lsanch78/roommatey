@@ -40,16 +40,15 @@ public class HomeController {
         String formatted = today.format(formatter) + getDaySuffix(today.getDayOfMonth());
         model.addAttribute("todayFormatted", formatted);
 
-        Map<User, List<Bill>> userBills = new HashMap<>();
+        Map<User, List<BillShare>> userBillShares = new HashMap<>();
         for (User user : userRepo.findAll()) {
-            List<Bill> bills = user.getShares().stream()
-                    .map(BillShare::getBill)
-                    .filter(b -> b.getDueDate().isAfter(today.minusDays(1)))
-                    .sorted(Comparator.comparing(Bill::getDueDate))
+            List<BillShare> shares = user.getShares().stream()
+                    .filter(s -> s.getBill().getDueDate().isAfter(today.minusDays(1)))
+                    .sorted(Comparator.comparing(s -> s.getBill().getDueDate()))
                     .toList();
-
-            userBills.put(user, bills);
+            userBillShares.put(user, shares);
         }
+        model.addAttribute("userBillShares", userBillShares);
 
         Map<User, List<Chore>> userChores = new HashMap<>();
         for (User user : userRepo.findAll()) {
@@ -57,7 +56,7 @@ public class HomeController {
             userChores.put(user, chores);
         }
 
-        model.addAttribute("userBills", userBills);
+        model.addAttribute("userBills", userBillShares);
         model.addAttribute("userChores", userChores);
 
         return "index";
