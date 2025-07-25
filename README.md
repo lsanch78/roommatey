@@ -4,7 +4,7 @@
 
 ---
 
-## 📸 Features
+## Features
 
 - 📋 **Chore Management**: Create, assign, and schedule recurring chores (daily, weekly, monthly).
 - 💰 **Bill Tracking**: Manage shared expenses with per-user breakdowns and due dates.
@@ -14,7 +14,7 @@
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
 - **Backend**: Java 17+, Spring Boot 3
 - **Frontend**: Thymeleaf, Bootstrap 5
@@ -23,15 +23,15 @@
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### 📦 Prerequisites
+### Prerequisites
 
 - Java 17+
 - Maven 3.8+
 - MySQL (optional, for production)
 
-### 🧪 Run Locally
+### Run Locally
 
 ```bash
 git clone https://github.com/your-username/roommatey.git
