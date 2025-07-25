@@ -52,3 +52,5 @@
 git clone https://github.com/your-username/roommatey.git
 cd roommatey
 ./mvnw spring-boot:run
+Visit the app in your browser:
+http://localhost:8080
