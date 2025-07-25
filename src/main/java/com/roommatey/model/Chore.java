@@ -2,8 +2,29 @@ package com.roommatey.model;
 
 import jakarta.persistence.*;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+
+
 @Entity
 public class Chore {
+
+
+    private LocalDate startDate; // The day the chore begins
+
+    @Enumerated(EnumType.STRING)
+    private RepeatType repeatType; // DAILY, WEEKLY, MONTHLY
+
+    private LocalDate dueDate;
+
+    @Enumerated(EnumType.STRING)
+    private ChoreType type;
+
+    private Integer recurringDayOfMonth;
+
+    @Enumerated(EnumType.STRING)
+    private DayOfWeek recurringDayOfWeek;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,4 +64,45 @@ public class Chore {
 
     public User getAssignedTo() { return assignedTo; }
     public void setAssignedTo(User assignedTo) { this.assignedTo = assignedTo; }
+
+    public Integer getRecurringDayOfMonth() {
+        return recurringDayOfMonth;
+    }
+
+    public void setRecurringDayOfMonth(Integer recurringDayOfMonth) {
+        this.recurringDayOfMonth = recurringDayOfMonth;
+    }
+
+    public DayOfWeek getRecurringDayOfWeek() {
+        return recurringDayOfWeek;
+    }
+
+    public void setRecurringDayOfWeek(DayOfWeek recurringDayOfWeek) {
+        this.recurringDayOfWeek = recurringDayOfWeek;
+    }
+    public ChoreType getType() {
+        return type;
+    }
+    public void setType(ChoreType type) {
+        this.type = type;
+    }
+    public LocalDate getDueDate() {
+        return dueDate;
+    }
+    public void setDueDate(LocalDate dueDate) {
+        this.dueDate = dueDate;
+    }
+    public RepeatType getRepeatType() {
+        return repeatType;
+    }
+    public void setRepeatType(RepeatType repeatType) {
+        this.repeatType = repeatType;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
 }

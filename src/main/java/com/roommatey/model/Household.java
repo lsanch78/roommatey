@@ -7,10 +7,10 @@ import java.util.List;
 public class Household {
 
     @OneToMany(mappedBy = "household", cascade = CascadeType.ALL)
-    private java.util.List<User> members;
+    private List<User> members;
 
-    public java.util.List<User> getMembers() { return members; }
-    public void setMembers(java.util.List<User> members) { this.members = members; }
+    public List<User> getMembers() { return members; }
+    public void setMembers(List<User> members) { this.members = members; }
 
 
     @Id
@@ -18,10 +18,6 @@ public class Household {
     private Long id;
 
     private String name;
-
-    // Later, we’ll connect users to households
-    // @OneToMany(mappedBy = "household")
-    // private List<User> members;
 
     // Getters and setters
     public Long getId() { return id; }
