@@ -16,16 +16,16 @@
 
 ## 🖼️ Screenshots
 
-### 🏠 Dashboard
+### Dashboard
 ![Dashboard](screenshots/dashboard.png)
 
-### 📋 Manage Bills
+### Manage Bills
 ![Manage Bills](screenshots/managebills.png)
 
-### 🧼 Manage Chores
+### Manage Chores
 ![Manage Chores](screenshots/managechores.png)
 
-### 👥 Manage Roommates
+### Manage Roommates
 ![Manage Roommates](screenshots/manageroommates.png)
 
 ---
