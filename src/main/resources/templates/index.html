@@ -12,7 +12,7 @@
 
     <!-- Prompts for asking user to input data -->
     <div th:if="${#lists.isEmpty(users)}" class="alert alert-warning d-flex justify-content-between align-items-center mt-4">
-        <span>No users found. Get started by adding your first roommate!</span>
+        <span>This place is kinda empty.. Get started by adding your first roommate!</span>
         <a href="/users/register" class="btn btn-sm btn-primary">Add Roommate</a>
     </div>
 
@@ -26,23 +26,28 @@
     <!-- Bills -->
     <ul class="list-group list-group-flush mb-2">
         <li th:each="bill : ${entry.value}" th:if="${bill != null}" class="list-group-item d-flex justify-content-between align-items-center">
-            <span>
-                <strong th:text="${bill.bill.name}"></strong> –
-                <span th:text="'Due ' + ${#temporals.format(bill.bill.dueDate, 'MMMM dd, yyyy')}"></span>
-            </span>
+        <span>
+            <strong th:text="${bill.bill.name}"></strong><br/>
+            <small class="text-muted" th:text="'Due ' + ${#temporals.format(bill.bill.dueDate, 'MMMM dd, yyyy')}"></small>
+        </span>
             <span class="badge bg-danger rounded-pill" th:text="'$' + ${#numbers.formatDecimal(bill.amountOwed, 1, 2)}"></span>
         </li>
         <li th:if="${entry.value.size() == 0}" class="list-group-item text-muted">No upcoming bills</li>
     </ul>
 
+
     <!-- Chores -->
     <ul class="list-group list-group-flush">
         <li th:each="chore : ${userChores[entry.key]}" class="list-group-item">
-            <span>
-                <strong th:text="${chore.name}"></strong>
-                <span class="text-muted" th:text="'(' + ${chore.repeatType} + ')'"></span> –
-                <span th:text="${chore.instructions}"></span>
-            </span>
+        <span>
+            <strong th:text="${chore.name}"></strong>
+            <span class="text-muted" th:text="'(' + (${chore.repeatType != null ? #strings.capitalize(chore.repeatType.toString().toLowerCase()) : 'One-time'}) + ')'"></span>
+             –
+            <span th:text="${chore.instructions}"></span>
+            <br/>
+            <small class="text-muted" th:if="${chore.startDate != null}"
+                   th:text="'Due ' + ${#temporals.format(chore.startDate, 'MMMM dd, yyyy')}"></small>
+        </span>
         </li>
         <li th:if="${userChores[entry.key].size() == 0}" class="list-group-item text-muted">No chores assigned</li>
     </ul>

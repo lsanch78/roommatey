@@ -20,15 +20,18 @@ public class BillController {
     private final HouseholdRepository householdRepo;
     private final UserRepository userRepo;
 
+
     public BillController(BillRepository billRepo, HouseholdRepository householdRepo, UserRepository userRepo) {
         this.billRepo = billRepo;
         this.householdRepo = householdRepo;
         this.userRepo = userRepo;
+
     }
 
     @GetMapping("/manage")
     public String manageBills(Model model) {
         model.addAttribute("bills", billRepo.findAll());
+        model.addAttribute("users", userRepo.findAll());
         return "bill-manage";
     }
 

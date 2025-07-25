@@ -30,6 +30,7 @@ public class ChoreController {
     @GetMapping("/all")
     public String viewChores(Model model) {
         model.addAttribute("chores", choreRepo.findAll());
+        model.addAttribute("users", userRepo.findAll());
         return "chore-manage";
     }
 

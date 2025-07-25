@@ -7,7 +7,6 @@
 </head>
 <body class="bg-light">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
-<button type="submit" class="btn-primary mb-3">Add Chore</button>
 
 <div class="container mt-5">
     <h2 class="mb-4">Add a New Chore</h2>
@@ -37,6 +36,7 @@
                 <option th:value="DAILY">Daily</option>
                 <option th:value="WEEKLY">Weekly (same weekday)</option>
                 <option th:value="MONTHLY">Monthly (same day #)</option>
+                <option th:value="WEEKLY_ROTATION">Weekly Rotation (Coming Soon)</option>
             </select>
         </div>
 
@@ -49,6 +49,10 @@
                             th:selected="${chore.assignedTo?.id == user.id}"></option>
                 </th:block>
             </select>
+
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Add Chore</button>
         </div>
     </form>
 </div>
