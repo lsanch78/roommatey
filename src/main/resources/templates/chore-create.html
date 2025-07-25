@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Chore</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container mt-5">
+    <h2 class="mb-4">Add a New Chore</h2>
+
+
+    <form th:action="@{/chores/create}" th:object="${chore}" method="post">
+
+        <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" th:field="*{name}" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Instructions</label>
+            <textarea class="form-control" rows="3" th:field="*{instructions}"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Due Date</label>
+            <input type="date" class="form-control" th:field="*{startDate}" required />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Repeat</label>
+            <select class="form-select" th:field="*{repeatType}">
+                <option value="">-- Do not repeat (One-time) --</option>
+                <option th:value="DAILY">Daily</option>
+                <option th:value="WEEKLY">Weekly (same weekday)</option>
+                <option th:value="MONTHLY">Monthly (same day #)</option>
+                <option th:value="WEEKLY_ROTATION">Weekly Rotation (Coming Soon)</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="user">Assign to</label>
+            <select class="form-select" name="userId" id="user" required>
+                <option value="">-- Choose a roommate --</option>
+                <th:block th:each="user : ${users}">
+                    <option th:value="${user.id}" th:text="${user.name}"
+                            th:selected="${chore.assignedTo?.id == user.id}"></option>
+                </th:block>
+            </select>
+
+        </div>
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">Add Chore</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    const typeSelect = document.getElementById('choreTypeSelect');
+    const frequencyGroup = document.getElementById('frequencyGroup');
+    const dayOfMonthGroup = document.getElementById('dayOfMonthGroup');
+    const dayOfWeekGroup = document.getElementById('dayOfWeekGroup');
+
+    function toggleRecurringFields() {
+        const isRecurring = typeSelect.value === 'RECURRING';
+        frequencyGroup.style.display = isRecurring ? 'block' : 'none';
+        dayOfMonthGroup.style.display = isRecurring ? 'block' : 'none';
+        dayOfWeekGroup.style.display = isRecurring ? 'block' : 'none';
+    }
+
+    typeSelect.addEventListener('change', toggleRecurringFields);
+    document.addEventListener('DOMContentLoaded', toggleRecurringFields);
+</script>
+
+</body>
+</html>

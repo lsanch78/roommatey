@@ -23,20 +23,26 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, @RequestParam("household.id") Long householdId) {
-        Household household = householdRepo.findById(householdId).orElse(null);
+    public String register(@ModelAttribute User user) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        if (household == null) {
+            return "redirect:/household/create"; // fallback
+        }
         user.setHousehold(household);
         userRepo.save(user);
         return "redirect:/users/registered";
     }
 
 
+
     @GetMapping("/register")
     public String showForm(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("user", new User());
-        model.addAttribute("households", householdRepo.findAll());
+        model.addAttribute("household", household);
         return "register-user";
     }
+
 
     @GetMapping("/registered")
     public String done() {
@@ -49,4 +55,37 @@ public class UserController {
         model.addAttribute("users", users);
         return "user-list";
     }
+
+    @GetMapping("/manage")
+    public String manageUsers(Model model) {
+        model.addAttribute("users", userRepo.findAll());
+        return "user-manage";
+    }
+    @GetMapping("/edit/{id}")
+    public String editUser(@PathVariable Long id, Model model) {
+        User user = userRepo.findById(id).orElseThrow();
+        model.addAttribute("user", user);
+        return "user-edit";
+    }
+
+    @PostMapping("/edit/{id}")
+    public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        user.setId(id); // ensure update not insert
+        if (user.getHousehold() == null) {
+            user.setHousehold(household);
+        }
+        userRepo.save(user);
+        return "redirect:/users/manage";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userRepo.deleteById(id);
+        return "redirect:/users/manage";
+    }
+
+
+
+
 }

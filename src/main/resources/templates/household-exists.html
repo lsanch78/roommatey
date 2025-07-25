@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Household Created</title>
+    <title>Household Exists</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-5 text-center">
-    <div class="alert alert-success">
-        <h2 class="alert-heading">Household created successfully!</h2>
-        <p class="mb-4">You're all set to start managing your household with RoomMatey.</p>
-        <a href="/" class="btn btn-primary">Back to Dashboard</a>
+    <div class="alert alert-warning">
+        <h2 class="alert-heading">A household already exists.</h2>
+        <p class="mb-4">You can manage the existing household or return to the dashboard.</p>
+        <a href="/" class="btn btn-primary">Back to Home</a>
     </div>
 </div>
 </body>
