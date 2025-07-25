@@ -1,6 +1,6 @@
 # 🏠 RoomMatey
 
-**RoomMatey** is a lightweight, all-in-one roommate management dashboard. It's designed for households that want to stay organized and keep things fair — without the stress. With RoomMatey, you can assign chores, split bills, and manage your household easily, all in one place.
+**RoomMatey** is a lightweight, all-in-one roommate management dashboard. It's designed for households that want to stay organized and keep things fair without the stress. With RoomMatey, you can assign chores, split bills, and manage your household easily, all in one place.
 
 ---
 
