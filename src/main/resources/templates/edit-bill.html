@@ -1,58 +1,77 @@
 <!DOCTYPE html>
-<div th:if="${error}" style="color:red;">
-    <p th:text="${error}"></p>
-</div>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Edit Bill</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="bg-light">
+<div class="container mt-5">
+    <h2 class="mb-4">Edit Bill</h2>
 
-<h2>Edit Bill</h2>
+    <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
 
-<form th:action="@{/bills/update/{id}(id=${bill.id})}" method="post" th:object="${bill}">
+    <form th:action="@{/bills/update/{id}(id=${bill.id})}" method="post" th:object="${bill}" class="row g-3">
 
-    <label>Name:
-        <input type="text" th:field="*{name}" required />
-    </label><br>
+        <div class="col-md-6">
+            <label class="form-label">Name</label>
+            <input type="text" th:field="*{name}" class="form-control" required />
+        </div>
 
-    <label>Amount:
-        <input type="number" step="0.01" th:field="*{amount}" required />
-    </label><br>
+        <div class="col-md-6">
+            <label class="form-label">Amount</label>
+            <input type="number" step="0.01" th:field="*{amount}" class="form-control" required />
+        </div>
 
-    <label>Due Date:
-        <input type="date" th:field="*{dueDate}" required />
-    </label><br>
+        <div class="col-md-6">
+            <label class="form-label">Due Date</label>
+            <input type="date" th:field="*{dueDate}" class="form-control" required />
+        </div>
 
-    <label>Category:
-        <select th:field="*{category}">
-            <option value="RENT">Rent</option>
-            <option value="UTILITIES">Utilities</option>
-            <option value="ENTERTAINMENT">Entertainment</option>
-            <option value="CLEANING">Cleaning</option>
-            <option value="MISC">Misc</option>
-        </select>
-    </label><br>
+        <div class="col-md-6">
+            <label class="form-label">Category</label>
+            <select th:field="*{category}" class="form-select">
+                <option value="RENT">Rent</option>
+                <option value="UTILITIES">Utilities</option>
+                <option value="ENTERTAINMENT">Entertainment</option>
+                <option value="CLEANING">Cleaning</option>
+                <option value="MISC">Misc</option>
+            </select>
+        </div>
 
-    <label>
-        <input type="checkbox" th:field="*{recurring}" />
-        Recurring?
-    </label><br><br>
+        <div class="col-12">
+            <div class="form-check">
+                <input type="checkbox" th:field="*{recurring}" class="form-check-input" id="recurringCheck" />
+                <label class="form-check-label" for="recurringCheck">Recurring?</label>
+            </div>
+        </div>
 
-    <label>Split Method:</label><br>
-    <input type="radio" name="splitType" value="even" /> Split Evenly<br>
-    <input type="radio" name="splitType" value="single" /> One Person Pays<br><br>
+        <div class="col-12">
+            <label class="form-label">Split Method</label>
+            <div class="form-check">
+                <input type="radio" name="splitType" value="even" class="form-check-input" id="evenSplit" />
+                <label class="form-check-label" for="evenSplit">Split Evenly</label>
+            </div>
+            <div class="form-check">
+                <input type="radio" name="splitType" value="single" class="form-check-input" id="singleSplit" />
+                <label class="form-check-label" for="singleSplit">One Person Pays</label>
+            </div>
+        </div>
 
-    <label>Assign Users:</label><br>
-    <div th:each="u : ${users}">
-        <input type="checkbox" name="userIds" th:value="${u.id}" />
-        <span th:text="${u.name}"></span><br>
-    </div><br>
+        <div class="col-12">
+            <label class="form-label">Assign Users</label>
+            <div class="form-check" th:each="u : ${users}">
+                <input type="checkbox" name="userIds" th:value="${u.id}" class="form-check-input" th:id="${'user_' + u.id}" />
+                <label class="form-check-label" th:for="${'user_' + u.id}" th:text="${u.name}"></label>
+            </div>
+        </div>
 
-    <button type="submit">Update Bill</button>
-</form>
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Update Bill</button>
+            <a href="/bills/all" class="btn btn-secondary">Cancel</a>
+        </div>
 
-<a href="/bills/all">Cancel</a>
-
+    </form>
+</div>
 </body>
 </html>
