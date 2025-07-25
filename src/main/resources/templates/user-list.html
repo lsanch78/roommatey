@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head><title>All Users</title></head>
-<body>
-<h2>All Users</h2>
-<ul>
-  <li th:each="user : ${users}">
-    <span th:text="${user.name}"></span> — <span th:text="${user.household?.name}"></span>
-  </li>
-</ul>
+<head>
+  <meta charset="UTF-8">
+  <title>All Users</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+  <h2 class="mb-4">All Roommates</h2>
+  <ul class="list-group">
+    <li class="list-group-item d-flex justify-content-between align-items-center"
+        th:each="user : ${users}">
+      <span th:text="${user.name}"></span>
+      <small class="text-muted" th:text="'Household: ' + ${user.household?.name}"></small>
+    </li>
+  </ul>
+</div>
 </body>
 </html>
