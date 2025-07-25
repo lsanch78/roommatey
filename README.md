@@ -14,6 +14,22 @@
 
 ---
 
+## 🖼️ Screenshots
+
+### 🏠 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 📋 Manage Bills
+![Manage Bills](screenshots/managebills.png)
+
+### 🧼 Manage Chores
+![Manage Chores](screenshots/managechores.png)
+
+### 👥 Manage Roommates
+![Manage Roommates](screenshots/manageroommates.png)
+
+---
+
 ## Tech Stack
 
 - **Backend**: Java 17+, Spring Boot 3
@@ -30,11 +46,9 @@
 - Java 17+
 - Maven 3.8+
 
-### Run Locally![img.png](img.png)
+### Run Locally
 
 ```bash
 git clone https://github.com/your-username/roommatey.git
 cd roommatey
 ./mvnw spring-boot:run
-Visit the app in your browser:
-http://localhost:8080
