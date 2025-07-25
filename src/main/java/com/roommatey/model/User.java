@@ -49,10 +49,10 @@ public class User {
     }
 
     @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
-    private List<Chore> assignedChores = new ArrayList<>();
+    private List<Chore> chores = new ArrayList<>();
 
-    public List<Chore> getAssignedChores() {
-        return assignedChores;
+    public List<Chore> getChores() {
+        return chores;
     }
 
 }

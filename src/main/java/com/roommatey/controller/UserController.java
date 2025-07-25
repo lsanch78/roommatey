@@ -70,10 +70,15 @@ public class UserController {
 
     @PostMapping("/edit/{id}")
     public String updateUser(@PathVariable Long id, @ModelAttribute User user) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         user.setId(id); // ensure update not insert
+        if (user.getHousehold() == null) {
+            user.setHousehold(household);
+        }
         userRepo.save(user);
         return "redirect:/users/manage";
     }
+
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
         userRepo.deleteById(id);

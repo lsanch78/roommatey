@@ -42,9 +42,13 @@ public class HouseholdController {
     @GetMapping("/manage")
     public String manageHousehold(Model model) {
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        if (household == null) {
+            return "redirect:/household/create";
+        }
         model.addAttribute("household", household);
         return "household-manage";
     }
+
 
     @PostMapping("/manage")
     public String updateHousehold(@ModelAttribute Household household) {

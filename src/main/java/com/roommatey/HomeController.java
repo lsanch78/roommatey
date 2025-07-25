@@ -25,20 +25,20 @@ public class HomeController {
         this.userRepo = userRepo;
     }
 
-    @OneToMany(mappedBy = "assignedTo", cascade = CascadeType.ALL)
-    private List<Chore> assignedChores;
-
     @GetMapping("/")
     public String home(Model model) {
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+
+        if (household == null) {
+            return "welcome";
+        }
+
         model.addAttribute("household", household);
 
         LocalDate today = LocalDate.now();
-
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d");
         String formatted = today.format(formatter) + getDaySuffix(today.getDayOfMonth());
         model.addAttribute("todayFormatted", formatted);
-
 
         Map<User, List<Bill>> userBills = new HashMap<>();
         for (User user : userRepo.findAll()) {
@@ -51,7 +51,14 @@ public class HomeController {
             userBills.put(user, bills);
         }
 
+        Map<User, List<Chore>> userChores = new HashMap<>();
+        for (User user : userRepo.findAll()) {
+            List<Chore> chores = user.getChores() == null ? List.of() : user.getChores();
+            userChores.put(user, chores);
+        }
+
         model.addAttribute("userBills", userBills);
+        model.addAttribute("userChores", userChores);
 
         return "index";
     }
