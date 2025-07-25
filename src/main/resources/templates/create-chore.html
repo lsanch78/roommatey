@@ -7,8 +7,11 @@
 </head>
 <body class="bg-light">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
+<button type="submit" class="btn-primary mb-3">Add Chore</button>
+
 <div class="container mt-5">
     <h2 class="mb-4">Add a New Chore</h2>
+
 
     <form th:action="@{/chores/create}" th:object="${chore}" method="post">
 
@@ -47,8 +50,6 @@
                 </th:block>
             </select>
         </div>
-
-        <button type="submit" class="btn btn-primary">Add Chore</button>
     </form>
 </div>
 

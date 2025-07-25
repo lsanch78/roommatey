@@ -10,7 +10,7 @@
 <h1 class="mb-4">🏠 Welcome to RoomMatey</h1>
 <h4 th:text="${todayFormatted}" class="text-muted mb-3"></h4>
 
-<h3 class="mt-4">📅 Upcoming Events</h3>
+<h3 class="mt-4">📋 Dashboard Summary</h3>
 
 <div th:each="entry : ${userBills}" class="mb-4 border rounded p-3 shadow-sm">
     <h5 th:text="${entry.key.name}" class="text-primary mb-3"></h5>
