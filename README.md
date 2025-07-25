@@ -14,6 +14,22 @@
 
 ---
 
+## 🖼️ Screenshots
+
+### 🏠 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 📋 Manage Bills
+![Manage Bills](screenshots/managebills.png)
+
+### 🧼 Manage Chores
+![Manage Chores](screenshots/managechores.png)
+
+### 👥 Manage Roommates
+![Manage Roommates](screenshots/manageroommates.png)
+
+---
+
 ## Tech Stack
 
 - **Backend**: Java 17+, Spring Boot 3
