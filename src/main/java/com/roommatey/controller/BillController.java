@@ -7,6 +7,7 @@ import com.roommatey.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 import java.util.List;
@@ -40,7 +41,11 @@ public class BillController {
     }
 
     @GetMapping("/new")
-    public String newBillForm(Model model) {
+    public String newBillForm(Model model, RedirectAttributes redirectAttrs) {
+        if (userRepo.count() == 0) {
+            redirectAttrs.addFlashAttribute("error", "You must add at least one roommate before creating a bill.");
+            return "redirect:/users/register";
+        }
         model.addAttribute("bill", new Bill());
         model.addAttribute("households", householdRepo.findAll());
         model.addAttribute("categories", BillCategory.values());

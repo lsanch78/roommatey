@@ -9,6 +9,7 @@ import com.roommatey.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.DayOfWeek;
 
@@ -29,11 +30,15 @@ public class ChoreController {
     @GetMapping("/all")
     public String viewChores(Model model) {
         model.addAttribute("chores", choreRepo.findAll());
-        return "chore-list";
+        return "chore-manage";
     }
 
     @GetMapping("/new")
-    public String newChore(Model model) {
+    public String newChore(Model model, RedirectAttributes redirectAttrs) {
+        if (userRepo.count() == 0) {
+            redirectAttrs.addFlashAttribute("error", "You must add at least one roommate before creating a chore.");
+            return "redirect:/users/register";
+        }
         model.addAttribute("chore", new Chore());
         model.addAttribute("frequencies", Frequency.values());
         model.addAttribute("users", userRepo.findAll());

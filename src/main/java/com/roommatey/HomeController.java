@@ -34,6 +34,8 @@ public class HomeController {
         }
 
         model.addAttribute("household", household);
+        model.addAttribute("users", userRepo.findAll());
+
 
         LocalDate today = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE, MMMM d");

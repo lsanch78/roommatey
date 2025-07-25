@@ -8,41 +8,40 @@
 <body class="bg-light">
 <div th:replace="~{fragments/navbar :: navbar}"></div>
 <div class="container mt-5">
-    <h2 class="mb-4">Manage Bills</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Manage Bills</h2>
+        <a class="btn btn-primary" th:href="@{/bills/new}">Create New Bill</a>
+    </div>
 
     <div th:if="${error}" class="alert alert-danger" role="alert">
         <p th:text="${error}"></p>
     </div>
 
-    <a th:href="@{/bills/new}" class="btn btn-primary mb-3">Create New Bill</a>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped align-middle">
-            <thead class="table-light">
-            <tr>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Due</th>
-                <th>Recurring</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="bill : ${bills}">
-                <td th:text="${bill.description}">Electric</td>
-                <td>$<span th:text="${bill.amount}">0.00</span></td>
-                <td th:text="${bill.dueDate}">2025-08-01</td>
-                <td th:text="${bill.recurring} ? 'Yes' : 'No'">No</td>
-                <td>
-                    <a th:href="@{|/bills/edit/${bill.id}|}" class="btn btn-sm btn-outline-primary me-2">Edit</a>
-                    <a th:href="@{|/bills/delete/${bill.id}|}"
-                       class="btn btn-sm btn-outline-danger"
-                       onclick="return confirm('Delete this bill?')">Delete</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Due</th>
+            <th>Recurring</th>
+            <th style="width: 160px;">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="bill : ${bills}">
+            <td th:text="${bill.name}">Electric</td>
+            <td>$<span th:text="${#numbers.formatDecimal(bill.amount, 1, 2)}">0.00</span></td>
+            <td th:text="${#temporals.format(bill.dueDate, 'MMM dd, yyyy')}">2025-08-01</td>
+            <td th:text="${bill.recurring} ? 'Yes' : 'No'">No</td>
+            <td>
+                <a class="btn btn-sm btn-warning me-1" th:href="@{|/bills/edit/${bill.id}|}">Edit</a>
+                <a class="btn btn-sm btn-danger"
+                   th:href="@{|/bills/delete/${bill.id}|}"
+                   onclick="return confirm('Delete this bill?')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
 </body>
 </html>
