@@ -49,7 +49,7 @@
 ### Run Locally
 
 ```bash
-git clone https://github.com/your-username/roommatey.git
+git clone https://github.com/lsanch78/roommatey.git
 cd roommatey
 ./mvnw spring-boot:run
 Visit the app in your browser:
