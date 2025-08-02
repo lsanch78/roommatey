@@ -52,13 +52,5 @@
 git clone https://github.com/your-username/roommatey.git
 cd roommatey
 ./mvnw spring-boot:run
-```
-
-### TODO:
-- Implement user sign up
-- Implement persistent database using MongoDB
-- Implement notification services
-
-## Known Bugs
-
-- 
+Visit the app in your browser:
+http://localhost:8080
