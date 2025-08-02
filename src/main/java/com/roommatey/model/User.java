@@ -29,7 +29,7 @@ public class User {
     public void setName(String name) { this.name = name; }
 
     public String getPhone() { return phoneNumber; }
-    public void setEmail(String email) { this.phoneNumber = email; }
+    public void setPhone(String phone) { this.phoneNumber = phone; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
