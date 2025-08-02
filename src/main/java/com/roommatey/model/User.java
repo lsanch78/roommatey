@@ -14,7 +14,7 @@ public class User {
     private Long id;
 
     private String name;
-    private String email;
+    private String phoneNumber;
     private String password;
 
     @ManyToOne
@@ -28,8 +28,8 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getEmail() { return email; }
-    public void setEmail(String email) { this.email = email; }
+    public String getPhone() { return phoneNumber; }
+    public void setEmail(String email) { this.phoneNumber = email; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
