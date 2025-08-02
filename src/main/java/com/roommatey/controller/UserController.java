@@ -7,6 +7,7 @@ import com.roommatey.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -16,10 +17,12 @@ public class UserController {
 
     private final UserRepository userRepo;
     private final HouseholdRepository householdRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepo, HouseholdRepository householdRepo) {
+    public UserController(UserRepository userRepo, HouseholdRepository householdRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.householdRepo = householdRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
@@ -29,6 +32,7 @@ public class UserController {
             return "redirect:/household/create"; // fallback
         }
         user.setHousehold(household);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return "redirect:/users/registered";
     }
@@ -75,6 +79,9 @@ public class UserController {
         if (user.getHousehold() == null) {
             user.setHousehold(household);
         }
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepo.save(user);
         return "redirect:/users/manage";
     }
@@ -85,6 +92,16 @@ public class UserController {
         return "redirect:/users/manage";
     }
 
+
+    @GetMapping("/login")
+    public String login(@RequestParam String phone, @RequestParam String password, Model model) {
+        User user = userRepo.findByPhoneNumber(phone);
+        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
+            return "redirect:/";
+        }
+        model.addAttribute("error", "Invalid phone or password");
+        return "user-login";
+    }
 
 
 

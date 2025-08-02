@@ -28,8 +28,8 @@ public class User {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
-    public String getPhone() { return phoneNumber; }
-    public void setEmail(String email) { this.phoneNumber = email; }
+    public String getPhoneNumber() { return phoneNumber; }
+    public void setPhoneNumber(String email) { this.phoneNumber = email; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }

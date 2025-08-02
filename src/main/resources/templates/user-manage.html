@@ -24,7 +24,7 @@
         <tbody>
         <tr th:each="user : ${users}">
             <td th:text="${user.name}"></td>
-            <td th:text="${user.phone}"></td>
+            <td th:text="${user.phoneNumber}"></td>
             <td>
                 <a class="btn btn-sm btn-warning me-1" th:href="@{|/users/edit/${user.id}|}">Edit</a>
                 <a class="btn btn-sm btn-danger"
