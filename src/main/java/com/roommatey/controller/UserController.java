@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -90,17 +91,6 @@ public class UserController {
     public String deleteUser(@PathVariable Long id) {
         userRepo.deleteById(id);
         return "redirect:/users/manage";
-    }
-
-
-    @GetMapping("/login")
-    public String login(@RequestParam String phone, @RequestParam String password, Model model) {
-        User user = userRepo.findByPhoneNumber(phone);
-        if (user != null && passwordEncoder.matches(password, user.getPassword())) {
-            return "redirect:/";
-        }
-        model.addAttribute("error", "Invalid phone or password");
-        return "user-login";
     }
 
 

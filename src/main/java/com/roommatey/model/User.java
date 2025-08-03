@@ -14,7 +14,11 @@ public class User {
     private Long id;
 
     private String name;
+
+    @Column(unique = true)
     private String phoneNumber;
+
+
     private String password;
 
     @ManyToOne
@@ -29,7 +33,7 @@ public class User {
     public void setName(String name) { this.name = name; }
 
     public String getPhoneNumber() { return phoneNumber; }
-    public void setPhoneNumber(String email) { this.phoneNumber = email; }
+    public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }

@@ -63,6 +63,9 @@ public class HomeController {
 
         return "index";
     }
+
+
+    // HELPERS
     private String getDaySuffix(int day) {
         if (day >= 11 && day <= 13) return "th";
         return switch (day % 10) {

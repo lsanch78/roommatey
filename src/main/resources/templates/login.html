@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Sign in • RoomMatey</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body { background: #f7f8fb; }
+        .card { border: 0; border-radius: 1rem; }
+        .brand { font-weight: 700; letter-spacing: .3px; }
+    </style>
+</head>
+<body class="bg-light">
+<div th:replace="~{fragments/navbar :: navbar}"></div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-10 col-md-8 col-lg-5">
+            <div class="text-center mb-4">
+                <div class="brand h3 mb-1">RoomMatey</div>
+                <div class="text-muted">Sign in to your household</div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body p-4 p-md-5">
+                    <!-- Messages -->
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        Invalid credentials. Please try again.
+                    </div>
+                    <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                        You’ve been signed out.
+                    </div>
+
+                    <form th:action="@{/login}" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" th:name="${_csrf?.parameterName}" th:value="${_csrf?.token}" />
+                        <!-- If you use phone-as-username, keep the name="username" -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Phone number</label>
+                            <input id="username" name="phoneNumber" type="tel" class="form-control"
+                                   placeholder="+1 555 123 4567" inputmode="tel" required />
+                            <div class="invalid-feedback">Please enter your phone number.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <div class="input-group">
+                                <input id="password" name="password" type="password" class="form-control" required />
+                                <button class="btn btn-outline-secondary" type="button" id="togglePwd">Show</button>
+                                <div class="invalid-feedback">Please enter your password.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me">
+                            <label class="form-check-label" for="remember-me">Remember me</label>
+                        </div>
+
+                        <button class="btn btn-primary w-100" type="submit">Sign in</button>
+
+                        <div class="text-center mt-3">
+                            <a class="small" th:href="@{/register}">Register for an account</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <p class="text-center text-muted small mt-3">
+                Trouble signing in? Contact your household admin.
+            </p>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+        const form = document.querySelector('.needs-validation');
+        form.addEventListener('submit', function (e) {
+            if (!form.checkValidity()) {
+                e.preventDefault(); e.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+
+        const pwd = document.getElementById('password');
+        const toggle = document.getElementById('togglePwd');
+        toggle.addEventListener('click', () => {
+            const isPwd = pwd.type === 'password';
+            pwd.type = isPwd ? 'text' : 'password';
+            toggle.textContent = isPwd ? 'Hide' : 'Show';
+        });
+    })();
+</script>
+</body>
+</html>

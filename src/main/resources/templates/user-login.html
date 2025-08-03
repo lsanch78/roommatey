@@ -17,7 +17,7 @@
             <form th:action="@{/users/login}" method="post">
                 <div class="mb-3">
                     <label for="phone" class="form-label">Phone Number</label>
-                    <input type="tel" name="phone" class="form-control" id="phone" required>
+                    <input type="tel" pattern="^\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}$" name="phone" class="form-control" id="phone" required inputmode="tel" autocomplete="tel">
                 </div>
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
