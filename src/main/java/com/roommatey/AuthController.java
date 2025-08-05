@@ -23,6 +23,11 @@ public class AuthController {
         return "login"; // login.html
     }
 
+    @GetMapping("/logout")
+    public String logoutPage() {
+        return "logout";
+    }
+
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
