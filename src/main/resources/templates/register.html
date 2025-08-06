@@ -18,6 +18,10 @@
     Your account has been created! You can now <a th:href="@{/login}">log in</a>.
 </div>
 
+<div th:if="${param.failure}" class="alert alert-warning" role="alert">
+    This phone number is already associated with an account. Try to <a th:href="@{/login}">log in</a> or recover your password.
+</div>
+
 
 <div class="container py-5">
     <div class="row justify-content-center">

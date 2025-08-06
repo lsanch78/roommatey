@@ -18,9 +18,7 @@ public class GlobalModelAttributes {
 
 
         if (auth != null && auth.getPrincipal() instanceof RoommateyUserDetails details){
-            System.out.println("👤 Principal class: " + auth.getPrincipal().getClass());
             String name = details.getUser().getName();
-            System.out.println("Current user: " + name);
             model.addAttribute("userName", name);
         }
 

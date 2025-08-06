@@ -21,7 +21,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String loginPage() {
-        return "login"; // login.html
+        return "login";
     }
 
     @GetMapping("/logout")
@@ -32,14 +32,14 @@ public class AuthController {
     @GetMapping("/register")
     public String showRegisterForm(Model model) {
         model.addAttribute("user", new User());
-        return "register"; // register.html
+        return "register";
     }
 
     @PostMapping("/register")
     public String processRegister(@ModelAttribute("user") User user) {
         // Check if user's phone exists
         if (userRepo.findByPhoneNumber(user.getPhoneNumber()).isPresent()) {
-            throw new IllegalArgumentException("Phone number already registered");
+            return "redirect:/register?failure";
         }
 
 
@@ -48,6 +48,6 @@ public class AuthController {
         userRepo.save(user);
 
         // redirect to login page after successful registration
-        return "redirect:/register?succes";
+        return "redirect:/register?success";
     }
 }
