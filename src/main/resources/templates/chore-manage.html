@@ -15,7 +15,7 @@
                class="btn btn-secondary disabled"
                href="javascript:void(0)">Add a Household First!</a>
 
-            <a th:unless="${household == null}"
+            <a th:unless="${household != null}"
                class="btn btn-primary"
                th:href="@{/chores/new}">Add New Chore</a>
         </div>
