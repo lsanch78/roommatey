@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class AuthController {
 
+
     private final UserRepository userRepo;
     private final PasswordEncoder passwordEncoder;
 

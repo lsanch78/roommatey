@@ -1,5 +1,6 @@
 package com.roommatey.config;
 
+import com.roommatey.model.RoommateyUserDetails;
 import com.roommatey.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -32,6 +33,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .usernameParameter("phoneNumber") // tell Spring to use phoneNumber
+                        .defaultSuccessUrl("/", true)
                         .permitAll()
                 )
                 .logout(logout -> logout.permitAll());
@@ -42,10 +44,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return phoneNumber -> userRepo.findByPhoneNumber(phoneNumber)
-                .map(user -> User.withUsername(user.getPhoneNumber())
-                        .password(user.getPassword())
-                        .roles("USER") // default role
-                        .build())
+                .map(RoommateyUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with phone: " + phoneNumber));
     }
 

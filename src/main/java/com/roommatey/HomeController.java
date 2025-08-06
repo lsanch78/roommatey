@@ -31,6 +31,13 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model) {
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        if (auth.getPrincipal() instanceof RoommateyUserDetails details){
+            model.addAttribute("currentUserName", details.getUser().getName());
+        } else {
+            System.out.println("Not RoommateyUserDetail");
+        }
 
         if (household == null) {
             return "welcome";
