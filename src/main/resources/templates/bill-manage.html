@@ -10,11 +10,11 @@
 <div class="container mt-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Manage Bills</h2>
-        <a th:if="${#lists.isEmpty(users)}"
+        <a th:if="${household == null}"
            class="btn btn-secondary disabled"
-           href="javascript:void(0)">Add Roommates First!</a>
+           href="javascript:void(0)">Add a Household First!</a>
 
-        <a th:unless="${#lists.isEmpty(users)}"
+        <a th:if="${household != null}"
            class="btn btn-primary"
            th:href="@{/bills/new}">Create New Bill</a>
     </div>

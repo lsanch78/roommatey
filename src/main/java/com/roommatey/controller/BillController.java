@@ -30,8 +30,10 @@ public class BillController {
 
     @GetMapping("/manage")
     public String manageBills(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("bills", billRepo.findAll());
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("household", household);
         return "bill-manage";
     }
 

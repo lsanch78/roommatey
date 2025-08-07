@@ -5,6 +5,9 @@ import com.roommatey.repository.HouseholdRepository;
 import com.roommatey.repository.UserRepository;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToMany;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,14 +30,24 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
+
+        //Load model information
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        RoommateyUserDetails userDetails = (RoommateyUserDetails) auth.getPrincipal();
+        model.addAttribute("household", household);
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("currentUserName" , userDetails.getUser().getName());
+
+
+
+
 
         if (household == null) {
             return "welcome";
         }
 
-        model.addAttribute("household", household);
-        model.addAttribute("users", userRepo.findAll());
+
 
 
         LocalDate today = LocalDate.now();
@@ -63,6 +76,9 @@ public class HomeController {
 
         return "index";
     }
+
+
+    // HELPERS
     private String getDaySuffix(int day) {
         if (day >= 11 && day <= 13) return "th";
         return switch (day % 10) {

@@ -7,8 +7,10 @@ import com.roommatey.repository.UserRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/users")
@@ -16,10 +18,12 @@ public class UserController {
 
     private final UserRepository userRepo;
     private final HouseholdRepository householdRepo;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserController(UserRepository userRepo, HouseholdRepository householdRepo) {
+    public UserController(UserRepository userRepo, HouseholdRepository householdRepo, PasswordEncoder passwordEncoder) {
         this.userRepo = userRepo;
         this.householdRepo = householdRepo;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
@@ -29,6 +33,7 @@ public class UserController {
             return "redirect:/household/create"; // fallback
         }
         user.setHousehold(household);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepo.save(user);
         return "redirect:/users/registered";
     }
@@ -58,7 +63,9 @@ public class UserController {
 
     @GetMapping("/manage")
     public String manageUsers(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("household", household);
         return "user-manage";
     }
     @GetMapping("/edit/{id}")
@@ -75,6 +82,9 @@ public class UserController {
         if (user.getHousehold() == null) {
             user.setHousehold(household);
         }
+        if (user.getPassword() != null) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userRepo.save(user);
         return "redirect:/users/manage";
     }
@@ -84,7 +94,6 @@ public class UserController {
         userRepo.deleteById(id);
         return "redirect:/users/manage";
     }
-
 
 
 
