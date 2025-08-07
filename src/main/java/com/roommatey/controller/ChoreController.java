@@ -3,6 +3,7 @@ package com.roommatey.controller;
 import com.roommatey.model.Chore;
 import com.roommatey.model.ChoreType;
 import com.roommatey.model.Frequency;
+import com.roommatey.model.Household;
 import com.roommatey.repository.ChoreRepository;
 import com.roommatey.repository.HouseholdRepository;
 import com.roommatey.repository.UserRepository;
@@ -29,8 +30,10 @@ public class ChoreController {
 
     @GetMapping("/all")
     public String viewChores(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("chores", choreRepo.findAll());
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("household", household);
         return "chore-manage";
     }
 

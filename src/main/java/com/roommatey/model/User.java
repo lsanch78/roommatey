@@ -21,7 +21,7 @@ public class User {
 
     private String password;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "household_id")
     private Household household;
 

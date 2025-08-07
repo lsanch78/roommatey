@@ -43,6 +43,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
+
         return phoneNumber -> userRepo.findByPhoneNumber(phoneNumber)
                 .map(RoommateyUserDetails::new)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with phone: " + phoneNumber));

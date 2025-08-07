@@ -30,21 +30,24 @@ public class HomeController {
 
     @GetMapping("/")
     public String home(Model model) {
+
+        //Load model information
         Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        RoommateyUserDetails userDetails = (RoommateyUserDetails) auth.getPrincipal();
+        model.addAttribute("household", household);
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("currentUserName" , userDetails.getUser().getName());
 
-        if (auth.getPrincipal() instanceof RoommateyUserDetails details){
-            model.addAttribute("currentUserName", details.getUser().getName());
-        } else {
-            System.out.println("Not RoommateyUserDetail");
-        }
+
+
+
 
         if (household == null) {
             return "welcome";
         }
 
-        model.addAttribute("household", household);
-        model.addAttribute("users", userRepo.findAll());
+
 
 
         LocalDate today = LocalDate.now();

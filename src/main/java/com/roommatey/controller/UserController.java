@@ -63,7 +63,9 @@ public class UserController {
 
     @GetMapping("/manage")
     public String manageUsers(Model model) {
+        Household household = householdRepo.findAll().stream().findFirst().orElse(null);
         model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("household", household);
         return "user-manage";
     }
     @GetMapping("/edit/{id}")

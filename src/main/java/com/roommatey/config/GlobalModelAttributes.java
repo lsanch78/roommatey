@@ -19,15 +19,20 @@ public class GlobalModelAttributes {
         // Grab names globally
         if (auth != null && auth.getPrincipal() instanceof RoommateyUserDetails details){
             User user = details.getUser();
-
-
             model.addAttribute("userName", user.getName());
-
-
-            model.addAttribute("household", user.getHousehold());
         }
 
+    }
 
+    @ModelAttribute
+    public void addLoggedInUserHousehold(Model model, Authentication auth){
+
+        // Grab household globally
+        if (auth != null && auth.getPrincipal() instanceof RoommateyUserDetails details){
+            Household household = details.getHousehold();
+            model.addAttribute("userName", household);
+        }
 
     }
+
 }

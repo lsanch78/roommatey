@@ -33,4 +33,8 @@ public class RoommateyUserDetails implements UserDetails {
     public String getUsername() {
         return user.getName(); // We use phone number as our login
     }
+
+    public Household getHousehold() {
+        return user.getHousehold();
+    }
 }

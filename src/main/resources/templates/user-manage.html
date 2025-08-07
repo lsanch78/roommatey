@@ -14,7 +14,7 @@
            class="btn btn-secondary disabled"
            href="javascript:void(0)">Add a Household First!</a>
 
-        <a th:unless="${household == null}"
+        <a th:if="${household != null}"
            class="btn btn-primary"
            th:href="@{/users/register}">Add a roommate</a>
     </div>
